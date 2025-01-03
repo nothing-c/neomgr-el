@@ -51,3 +51,16 @@
   "Get file details from alist f"
   (cdr (assoc 'path x)))
 
+(defun neomgr-upload (f)
+  "Upload file f to Neocities"
+  (interactive "sFile: ") ;; TODO: does this autocomplete intelligently?
+  (let ((url-request-method "POST")
+	(url-request-extra-headers
+	 '(("Content-Type" . "TODO figure this out")))
+	(url-request-data "TODO figure this out too"))
+    (url-retrieve (concat "https://" neomgr-auth "@neocities.org/api/upload")
+		  (lambda (status)
+		    (let ((errp (plist-get status :error)))
+		      (if errp
+			  (message "Could not upload file: %s" errp)
+			(message "Successfully uploaded file")))))))
