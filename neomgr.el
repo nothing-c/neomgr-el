@@ -27,3 +27,27 @@
       (princ (concat "Tags: " (prin1-to-string (cdr (assoc 'tags json))) "\n")))) ;; Iffy but I'll leave it for now
   (kill-buffer)) ;; Remove JSON buffer
 
+(defun neomgr-list ()
+  "List files sitting on Neocities site"
+  (interactive)
+  (let ((url-request-method "GET"))
+    (url-retrieve (concat "https://" neomgr-auth "@neocities.org/api/list")
+		  (lambda (status)
+		    (let ((errp (plist-get status :error)))
+		      (if errp
+			  (message "Neomgr listing request error: %s" errp)
+			(neomgr-display-list (current-buffer))))))))
+
+(defun neomgr-display-list (list)
+  "Helper function to display remote files"
+  (switch-to-buffer list)
+  (forward-paragraph)
+  (let ((filevec (cdr (assoc 'files (json-read)))))
+    (with-output-to-temp-buffer "*neomgr file listing*"
+      (mapcar (lambda (x) (princ (concat x "\n"))) (mapcar (lambda (x) (neomgr-file-details x)) filevec))))
+  (kill-buffer))
+
+(defun neomgr-file-details (f)
+  "Get file details from alist f"
+  (cdr (assoc 'path x)))
+
