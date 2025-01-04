@@ -10,3 +10,10 @@ Call ~neomgr-info~ to get the information about your site.
 Call ~neomgr-list~ to get the current listing of files your site contains.
 
 Call ~neomgr-upload~ to upload a file (any file) to your site.
+
+* Possible Additions
+- Syncing a local directory with the remote site
+
+- Adding a deletion command
+
+- Getting a dashboard rolling
