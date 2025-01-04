@@ -56,9 +56,7 @@
   (interactive "sFile: ") ;; TODO: this doesn't autocomplete. Make it so
   (let ((url-request-method "POST")
 	(url-request-extra-headers
-	 '(("Content-Type" . "multipart/form-data; boundary=boundary")
-	   ("Content-Disposition" . "form-data; name=\"zzz.html\"; filename=\"zzz.html\"")
-	   ))
+	 '(("Content-Type" . "multipart/form-data; boundary=boundary")))
 	(url-request-data
 	 (with-temp-buffer
 	   (insert "--boundary\r\n")
