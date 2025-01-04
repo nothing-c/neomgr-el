@@ -54,18 +54,20 @@
 (defun neomgr-upload (f)
   "Upload file f to Neocities"
   (interactive "sFile: ") ;; TODO: this doesn't autocomplete. Make it so
+  (message f)
   (let ((url-request-method "POST")
 	(url-request-extra-headers
-	 '(("Content-Type" . "multipart/form-data; boundary=boundary")))
+	 '(("Content-Type" . "multipart/form-data; boundary=----Boundary")))
 	(url-request-data
-	 (with-temp-buffer
-	   (insert "--boundary\r\n")
-	   (insert (format "Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n" f f))
-	   (insert "Content-Type: application/octet-stream\r\n\r\n")
-	   (insert-file-contents f)
-	   (end-of-buffer)
-	   (insert "\r\n--boundary--")
-	   (buffer-string))))
+	 (encode-coding-string (with-temp-buffer
+				 (insert "------Boundary\r\n")
+				 (insert (format "Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n" f f))
+				 (insert "Content-Type: application/octet-stream\r\n\r\n")
+				 (let ((coding-system-for-read 'no-conversion))
+				   (insert-file-contents-literally f))
+				 (end-of-buffer)
+				 (insert "\r\n------Boundary--\r\n")
+				 (buffer-string)) 'us-ascii)))
     (url-retrieve (concat "https://" neomgr-auth "@neocities.org/api/upload")
 		  (lambda (status)
 		    (let ((errp (plist-get status :error)))
