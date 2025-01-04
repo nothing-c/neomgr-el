@@ -53,11 +53,21 @@
 
 (defun neomgr-upload (f)
   "Upload file f to Neocities"
-  (interactive "sFile: ") ;; TODO: does this autocomplete intelligently?
+  (interactive "sFile: ") ;; TODO: this doesn't autocomplete. Make it so
   (let ((url-request-method "POST")
 	(url-request-extra-headers
-	 '(("Content-Type" . "TODO figure this out")))
-	(url-request-data "TODO figure this out too"))
+	 '(("Content-Type" . "multipart/form-data; boundary=boundary")
+	   ("Content-Disposition" . "form-data; name=\"zzz.html\"; filename=\"zzz.html\"")
+	   ))
+	(url-request-data
+	 (with-temp-buffer
+	   (insert "--boundary\r\n")
+	   (insert (format "Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n" f f))
+	   (insert "Content-Type: application/octet-stream\r\n\r\n")
+	   (insert-file-contents f)
+	   (end-of-buffer)
+	   (insert "\r\n--boundary--")
+	   (buffer-string))))
     (url-retrieve (concat "https://" neomgr-auth "@neocities.org/api/upload")
 		  (lambda (status)
 		    (let ((errp (plist-get status :error)))
