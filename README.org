@@ -2,8 +2,6 @@
 
 A version of [[https://github.com/nothing-c/utilityrepo/blob/main/neomgr.pl][Neomanager]] that is both more robust and integrated into Emacs.
 
-#+HTML_HEAD: <style>body {background-color: #262625;color: white; font-family: arial; font-size: 120%}p,h1,h2 {color: white; font-family: arial; font-size: 120%}a:link {color: #d468d4}a:visited {color: #d69fd6}</style>
-
 * Usage
 Set ~neomgr-auth~ to the format ~"username:password"~, and add ~(load "neomgr.el")~ to your ~init.el~.
 
