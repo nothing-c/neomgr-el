@@ -17,3 +17,6 @@ Call ~neomgr-upload~ to upload a file (any file) to your site.
 - Adding a deletion command
 
 - Getting a dashboard rolling
+
+- Add a hook for exporting org to html and uploading (and grabbing all the dependencies from an org file to list for upload)
+  - Either grab all the links with org functions or regex it
