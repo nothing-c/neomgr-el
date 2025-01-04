@@ -2,6 +2,8 @@
 
 A version of [[https://github.com/nothing-c/utilityrepo/blob/main/neomgr.pl][Neomanager]] that is both more robust and integrated into Emacs.
 
+#+HTML_HEAD: <style>body {background-color: #262625;color: white; font-family: arial; font-size: 120%}p,h1,h2 {color: white; font-family: arial; font-size: 120%}a:link {color: #d468d4}a:visited {color: #d69fd6}</style>
+
 * Usage
 Set ~neomgr-auth~ to the format ~"username:password"~, and add ~(load "neomgr.el")~ to your ~init.el~.
 
@@ -11,12 +13,11 @@ Call ~neomgr-list~ to get the current listing of files your site contains.
 
 Call ~neomgr-upload~ to upload a file (any file) to your site.
 
+Call ~neomgr-collect-links~ to get a list of the links used in an org file (so that you may upload all of the page's requirements)
+
 * Possible Additions
 - Syncing a local directory with the remote site
 
 - Adding a deletion command
 
 - Getting a dashboard rolling
-
-- Add a hook for exporting org to html and uploading (and grabbing all the dependencies from an org file to list for upload)
-  - Either grab all the links with org functions or regex it

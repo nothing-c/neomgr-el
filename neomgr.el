@@ -79,3 +79,11 @@
 		      (if errp
 			  (message "Could not upload file: %s" errp)
 			(message "Successfully uploaded file")))))))
+
+(defun neomgr-collect-links ()
+  "Grab all the links contained in an org file and display in a buffer"
+  (interactive)
+  (with-output-to-temp-buffer "*neomgr file links*"
+    (mapcar (lambda (x) (princ x) (princ "\n")) (org-element-map (org-element-parse-buffer) 'link
+      (lambda (link)
+	(org-element-property :path link))))))
