@@ -52,24 +52,27 @@
   (cdr (assoc 'path x)))
 
 (defun neomgr-upload ()
-  "Upload file f to Neocities"
+  "Upload file to Neocities (interactive)"
   (interactive)
-  (let* ((f (read-file-name "File: "))
-	(url-request-method "POST")
+  (let* ((f (read-file-name "File: ")))
+    (neomgr-file-upload f)))
+
+(defun neomgr-file-upload (f)
+  "Upload file f to Neocities (non-interactive)"
+  (let* ((url-request-method "POST")
 	(url-request-extra-headers
 	 '(("Content-Type" . "multipart/form-data; boundary=----Boundary")))
 	(url-request-data
 	 (encode-coding-string
 	  (with-temp-buffer
 	    (insert "------Boundary\r\n")
-	    (insert (format "Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n" f f))
+	    (insert (format "Content-Disposition: form-data; name=\"%s\"; filename=\"%s\"\r\n" (file-name-nondirectory f) f))
 	    (insert "Content-Type: application/octet-stream\r\n\r\n")
 	    (let ((coding-system-for-read 'no-conversion))
 	      (insert-file-contents-literally f))
 	    (end-of-buffer)
 	    (insert "\r\n------Boundary--\r\n")
 	    (buffer-string)) 'us-ascii)))
-    (message f)
     (url-retrieve (concat "https://" neomgr-auth "@neocities.org/api/upload")
 		  (lambda (status)
 		    (let ((errp (plist-get status :error)))
