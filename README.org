@@ -1,0 +1,12 @@
+#+TITLE: Neomanager
+
+A version of [[https://github.com/nothing-c/utilityrepo/blob/main/neomgr.pl][Neomanager]] that is both more robust and integrated into Emacs.
+
+* Usage
+Set ~neomgr-auth~ to the format ~"username:password"~, and add ~(load "neomgr.el")~ to your ~init.el~.
+
+Call ~neomgr-info~ to get the information about your site.
+
+Call ~neomgr-list~ to get the current listing of files your site contains.
+
+Call ~neomgr-upload~ to upload a file (any file) to your site.
