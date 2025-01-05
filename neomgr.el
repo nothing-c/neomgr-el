@@ -49,7 +49,7 @@
 
 (defun neomgr-file-details (f)
   "Get file details from alist f"
-  (cdr (assoc 'path x)))
+  (cdr (assoc 'path f)))
 
 (defun neomgr-upload ()
   "Upload file to Neocities (interactive)"
